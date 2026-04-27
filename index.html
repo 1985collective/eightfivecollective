@@ -582,29 +582,32 @@ document.querySelectorAll('.fade-up').forEach(function(el){
   observer.observe(el);
 });
 
-// Form submission
+// Form submission via Formspree
 function handleSubmit(e, id){
   e.preventDefault();
   var email = document.getElementById(id+'-email').value;
   var form = e.target;
   var success = document.getElementById(id+'-success');
+  var btn = form.querySelector('button');
 
-  // Store email locally
-  var emails = JSON.parse(localStorage.getItem('85c-waitlist') || '[]');
-  if(emails.indexOf(email) === -1){
-    emails.push(email);
-    localStorage.setItem('85c-waitlist', JSON.stringify(emails));
-  }
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
 
-  form.style.display = 'none';
-  success.style.display = 'block';
-
-  // Clear after 5 seconds to allow re-entry
-  setTimeout(function(){
-    form.style.display = 'flex';
-    form.reset();
-    success.style.display = 'none';
-  }, 5000);
+  fetch('https://formspree.io/f/xnjlkprk', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    body: JSON.stringify({email: email, source: id})
+  })
+  .then(function(res){ return res.json(); })
+  .then(function(data){
+    form.style.display = 'none';
+    success.style.display = 'block';
+  })
+  .catch(function(){
+    btn.textContent = 'Join Waitlist';
+    btn.disabled = false;
+    alert('Something went wrong. Please try again.');
+  });
 }
 </script>
 
