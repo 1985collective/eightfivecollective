@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eight Five Collective</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#f8f5f0;
+  --cream-dark:#ede8e0;
+  --ink:#1a1814;
+  --ink-mid:#4a4540;
+  --ink-light:#8a857d;
+  --gold:#9a7d4a;
+  --gold-light:#c4a97a;
+}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden}
+
+/* NAV */
+nav{
+position:fixed;top:0;left:0;right:0;z-index:100;
+padding:28px 48px;
+display:flex;align-items:center;justify-content:space-between;
+background:rgba(248,245,240,0.92);
+backdrop-filter:blur(8px);
+border-bottom:1px solid rgba(26,24,20,0.08);
+}
+.nav-logo{
+font-family:‘Jost’,sans-serif;
+font-weight:200;
+font-size:12px;
+letter-spacing:0.3em;
+text-transform:uppercase;
+color:var(–ink);
+text-decoration:none;
+}
+.nav-cta{
+font-size:11px;
+letter-spacing:0.2em;
+text-transform:uppercase;
+color:var(–ink);
+text-decoration:none;
+border-bottom:1px solid var(–ink);
+padding-bottom:2px;
+transition:color 0.3s,border-color 0.3s;
+}
+.nav-cta:hover{color:var(–gold);border-color:var(–gold)}
+
+/* HERO */
+.hero{
+min-height:100vh;
+display:flex;flex-direction:column;
+align-items:center;justify-content:center;
+text-align:center;
+padding:120px 48px 80px;
+position:relative;
+background:var(–cream);
+}
+.hero::before{
+content:’’;
+position:absolute;inset:0;
+background:radial-gradient(ellipse at 50% 60%, rgba(154,125,74,0.06) 0%, transparent 70%);
+pointer-events:none;
+}
+.hero-eyebrow{
+font-size:10px;
+letter-spacing:0.4em;
+text-transform:uppercase;
+color:var(–gold);
+margin-bottom:32px;
+opacity:0;
+animation:fadeUp 0.8s ease forwards 0.2s;
+}
+.hero-headline{
+font-family:‘Cormorant Garamond’,serif;
+font-weight:300;
+font-size:clamp(42px,7vw,96px);
+line-height:1.05;
+letter-spacing:0.02em;
+color:var(–ink);
+max-width:900px;
+margin-bottom:32px;
+opacity:0;
+animation:fadeUp 0.9s ease forwards 0.4s;
+}
+.hero-headline em{
+font-style:italic;
+color:var(–gold);
+}
+.hero-sub{
+font-size:12px;
+letter-spacing:0.25em;
+text-transform:uppercase;
+color:var(–ink-light);
+max-width:480px;
+line-height:2;
+margin-bottom:56px;
+opacity:0;
+animation:fadeUp 0.9s ease forwards 0.6s;
+}
+.hero-form{
+display:flex;
+gap:0;
+max-width:440px;
+width:100%;
+opacity:0;
+animation:fadeUp 0.9s ease forwards 0.8s;
+}
+.hero-form input{
+flex:1;
+padding:16px 20px;
+font-family:‘Jost’,sans-serif;
+font-size:12px;
+letter-spacing:0.1em;
+background:transparent;
+border:1px solid rgba(26,24,20,0.25);
+border-right:none;
+color:var(–ink);
+outline:none;
+transition:border-color 0.3s;
+}
+.hero-form input::placeholder{color:var(–ink-light);letter-spacing:0.15em;text-transform:uppercase;font-size:11px}
+.hero-form input:focus{border-color:var(–ink)}
+.hero-form button{
+padding:16px 28px;
+background:var(–ink);
+color:var(–cream);
+border:1px solid var(–ink);
+font-family:‘Jost’,sans-serif;
+font-size:10px;
+letter-spacing:0.25em;
+text-transform:uppercase;
+cursor:pointer;
+transition:background 0.3s,color 0.3s;
+white-space:nowrap;
+}
+.hero-form button:hover{background:var(–gold);border-color:var(–gold)}
+.hero-note{
+margin-top:16px;
+font-size:10px;
+letter-spacing:0.15em;
+text-transform:uppercase;
+color:var(–ink-light);
+opacity:0;
+animation:fadeUp 0.9s ease forwards 1s;
+}
+.success-msg{
+display:none;
+font-size:11px;
+letter-spacing:0.2em;
+text-transform:uppercase;
+color:var(–gold);
+margin-top:16px;
+}
+
+/* DIVIDER */
+.divider{
+width:1px;
+height:80px;
+background:linear-gradient(to bottom,transparent,var(–ink-light),transparent);
+margin:0 auto;
+}
+
+/* ABOUT */
+.about{
+padding:100px 48px;
+max-width:900px;
+margin:0 auto;
+text-align:center;
+}
+.about-label{
+font-size:10px;
+letter-spacing:0.4em;
+text-transform:uppercase;
+color:var(–gold);
+margin-bottom:40px;
+}
+.about-body{
+font-family:‘Cormorant Garamond’,serif;
+font-weight:300;
+font-size:clamp(22px,3vw,34px);
+line-height:1.6;
+color:var(–ink-mid);
+letter-spacing:0.01em;
+}
+.about-body strong{
+font-weight:400;
+color:var(–ink);
+}
+
+/* FEATURES */
+.features{
+padding:100px 48px;
+background:#e8e2d8;
+text-align:center;
+}
+.features-label{
+font-size:10px;
+letter-spacing:0.4em;
+text-transform:uppercase;
+color:var(–gold);
+margin-bottom:60px;
+}
+.features-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:1px;
+max-width:1000px;
+margin:0 auto;
+background:rgba(26,24,20,0.08);
+}
+.feature{
+padding:56px 40px;
+background:#e8e2d8;
+text-align:left;
+transition:background 0.3s;
+}
+.feature:hover{background:#dfd8cc}
+.feature-num{
+font-family:‘Cormorant Garamond’,serif;
+font-size:48px;
+font-weight:300;
+color:rgba(154,125,74,0.3);
+line-height:1;
+margin-bottom:24px;
+}
+.feature-title{
+font-size:10px;
+letter-spacing:0.3em;
+text-transform:uppercase;
+color:var(–ink);
+margin-bottom:16px;
+}
+.feature-body{
+font-size:13px;
+line-height:1.8;
+color:var(–ink-mid);
+letter-spacing:0.03em;
+}
+
+/* WHAT */
+.what{
+padding:100px 48px;
+max-width:1000px;
+margin:0 auto;
+background:var(–cream);
+}
+.what-header{
+text-align:center;
+margin-bottom:80px;
+}
+.what-label{
+font-size:10px;
+letter-spacing:0.4em;
+text-transform:uppercase;
+color:var(–gold);
+margin-bottom:24px;
+}
+.what-title{
+font-family:‘Cormorant Garamond’,serif;
+font-weight:300;
+font-size:clamp(32px,4vw,52px);
+color:var(–ink);
+line-height:1.2;
+}
+.what-title em{font-style:italic;color:var(–gold)}
+.what-list{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:40px;
+}
+.what-item{
+border-top:1px solid rgba(26,24,20,0.12);
+padding-top:28px;
+}
+.what-item-title{
+font-size:10px;
+letter-spacing:0.3em;
+text-transform:uppercase;
+color:var(–ink);
+margin-bottom:12px;
+}
+.what-item-body{
+font-size:13px;
+line-height:1.9;
+color:var(–ink-light);
+}
+
+/* CTA SECTION */
+.cta-section{
+padding:120px 48px;
+text-align:center;
+background:var(–cream-dark);
+position:relative;
+overflow:hidden;
+}
+.cta-section::before{
+content:‘85’;
+position:absolute;
+font-family:‘Cormorant Garamond’,serif;
+font-size:320px;
+font-weight:300;
+color:rgba(26,24,20,0.04);
+top:50%;left:50%;
+transform:translate(-50%,-50%);
+line-height:1;
+pointer-events:none;
+user-select:none;
+}
+.cta-label{
+font-size:10px;
+letter-spacing:0.4em;
+text-transform:uppercase;
+color:var(–gold);
+margin-bottom:32px;
+}
+.cta-title{
+font-family:‘Cormorant Garamond’,serif;
+font-weight:300;
+font-size:clamp(36px,5vw,64px);
+color:var(–ink);
+line-height:1.15;
+margin-bottom:24px;
+}
+.cta-title em{font-style:italic}
+.cta-sub{
+font-size:12px;
+letter-spacing:0.2em;
+text-transform:uppercase;
+color:var(–ink-light);
+margin-bottom:56px;
+line-height:2;
+}
+.cta-form{
+display:flex;
+gap:0;
+max-width:440px;
+width:100%;
+margin:0 auto;
+}
+.cta-form input{
+flex:1;
+padding:16px 20px;
+font-family:‘Jost’,sans-serif;
+font-size:12px;
+letter-spacing:0.1em;
+background:transparent;
+border:1px solid rgba(26,24,20,0.25);
+border-right:none;
+color:var(–ink);
+outline:none;
+transition:border-color 0.3s;
+}
+.cta-form input::placeholder{color:var(–ink-light);letter-spacing:0.15em;text-transform:uppercase;font-size:11px}
+.cta-form input:focus{border-color:var(–ink)}
+.cta-form button{
+padding:16px 28px;
+background:var(–ink);
+color:var(–cream);
+border:1px solid var(–ink);
+font-family:‘Jost’,sans-serif;
+font-size:10px;
+letter-spacing:0.25em;
+text-transform:uppercase;
+cursor:pointer;
+transition:background 0.3s,color 0.3s;
+white-space:nowrap;
+}
+.cta-form button:hover{background:var(–gold);border-color:var(–gold)}
+.cta-note{
+margin-top:16px;
+font-size:10px;
+letter-spacing:0.15em;
+text-transform:uppercase;
+color:var(–ink-light);
+}
+.cta-success{
+display:none;
+font-size:11px;
+letter-spacing:0.2em;
+text-transform:uppercase;
+color:var(–gold);
+margin-top:16px;
+}
+
+/* FOOTER */
+footer{
+padding:48px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-top:1px solid rgba(26,24,20,0.08);
+flex-wrap:wrap;
+gap:16px;
+}
+.footer-logo{
+font-family:‘Jost’,sans-serif;
+font-weight:200;
+font-size:11px;
+letter-spacing:0.3em;
+text-transform:uppercase;
+color:var(–ink);
+}
+.footer-copy{
+font-size:10px;
+letter-spacing:0.15em;
+color:var(–ink-light);
+}
+.footer-link{
+font-size:10px;
+letter-spacing:0.2em;
+text-transform:uppercase;
+color:var(–ink-light);
+text-decoration:none;
+transition:color 0.3s;
+}
+.footer-link:hover{color:var(–gold)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(24px)}
+to{opacity:1;transform:translateY(0)}
+}
+.fade-up{
+opacity:0;
+transform:translateY(24px);
+transition:opacity 0.8s ease,transform 0.8s ease;
+}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* MOBILE */
+@media(max-width:600px){
+nav{padding:20px 24px}
+.hero{padding:100px 24px 60px}
+.hero-form{flex-direction:column}
+.hero-form input{border-right:1px solid rgba(26,24,20,0.25);border-bottom:none}
+.about,.what,.cta-section{padding:80px 24px}
+.features{padding:80px 24px}
+.feature{padding:40px 24px}
+footer{padding:32px 24px}
+.cta-form{flex-direction:column}
+.cta-form input{border-right:1px solid rgba(26,24,20,0.25);border-bottom:none}
+}
+</style>
+
+</head>
+<body>
+
+<!-- NAV -->
+
+<nav>
+  <a class="nav-logo" href="#">Eight Five Collective</a>
+  <a class="nav-cta" href="#waitlist">Join the Waitlist</a>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+  <div class="hero-eyebrow">Coming Soon — Join the Waitlist</div>
+  <h1 class="hero-headline">Tools built by photographers,<br><em>for photographers.</em></h1>
+  <p class="hero-sub">Shot lists. Pose guides. Session checklists. Everything you need in the field — customized to your voice, your brand, your workflow.</p>
+  <form class="hero-form" onsubmit="handleSubmit(event,'hero')">
+    <input type="email" id="hero-email" placeholder="Your email address" required>
+    <button type="submit">Join Waitlist</button>
+  </form>
+  <p class="hero-note">Free to join. No credit card required.</p>
+  <p class="success-msg" id="hero-success">You're on the list. We'll be in touch.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+
+<section class="about fade-up">
+  <div class="about-label">What is Eight Five Collective</div>
+  <p class="about-body">
+    A platform built from years behind the lens. <strong>Eight Five Collective</strong> gives photographers customizable shot lists, posing prompts, and session checklists — so you can stay present, stay confident, and never miss a moment that matters.
+  </p>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+
+<section class="features">
+  <div class="features-label">What's Inside</div>
+  <div class="features-grid">
+    <div class="feature fade-up">
+      <div class="feature-num">01</div>
+      <div class="feature-title">Wedding Shot List</div>
+      <div class="feature-body">A complete shot list organized by category — portraits, details, candids — across every part of the day. With posing directions, camera settings, and a pun to break the tension.</div>
+    </div>
+    <div class="feature fade-up">
+      <div class="feature-num">02</div>
+      <div class="feature-title">Bridal Flatlay Checklist</div>
+      <div class="feature-body">Send clients a polished, interactive checklist of every detail to bring to their session. No more missed rings, veils, or invitation suites.</div>
+    </div>
+    <div class="feature fade-up">
+      <div class="feature-num">03</div>
+      <div class="feature-title">Your Brand, Your Voice</div>
+      <div class="feature-body">Add your studio name, customize the categories, edit the puns, remove what you don't need. Every tool should feel like it was made for you — because it was.</div>
+    </div>
+    <div class="feature fade-up">
+      <div class="feature-num">04</div>
+      <div class="feature-title">Built for the Field</div>
+      <div class="feature-body">Designed to work on any phone, any device, in any light. Pull it up between shots, hand it to an assistant, or send the link to your client the morning of.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT -->
+
+<section class="what">
+  <div class="what-header fade-up">
+    <div class="what-label">Built for every session</div>
+    <h2 class="what-title">More tools <em>coming soon</em></h2>
+  </div>
+  <div class="what-list">
+    <div class="what-item fade-up">
+      <div class="what-item-title">Engagement Sessions</div>
+      <div class="what-item-body">Location-specific pose guides and shot lists for couples sessions at any venue.</div>
+    </div>
+    <div class="what-item fade-up">
+      <div class="what-item-title">Family Portraits</div>
+      <div class="what-item-body">Group posing prompts, configuration guides, and candid moment checklists.</div>
+    </div>
+    <div class="what-item fade-up">
+      <div class="what-item-title">Newborn Sessions</div>
+      <div class="what-item-body">Safety-first posing guides, parent direction prompts, and detail shot checklists.</div>
+    </div>
+    <div class="what-item fade-up">
+      <div class="what-item-title">Senior Portraits</div>
+      <div class="what-item-body">Relaxed posing prompts, wardrobe change guides, and location shot lists.</div>
+    </div>
+    <div class="what-item fade-up">
+      <div class="what-item-title">Boudoir Sessions</div>
+      <div class="what-item-body">Confidence-building direction, lighting setups, and empowering posing guides.</div>
+    </div>
+    <div class="what-item fade-up">
+      <div class="what-item-title">More on the way</div>
+      <div class="what-item-body">Built by a working photographer, updated constantly. Your feedback shapes what comes next.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+
+<section class="cta-section" id="waitlist">
+  <div class="cta-label">Early Access</div>
+  <h2 class="cta-title">Be the first<br><em>in the field.</em></h2>
+  <p class="cta-sub">Join the waitlist and get early access when we launch.<br>Free to start. Built for the way you work.</p>
+  <form class="cta-form" onsubmit="handleSubmit(event,'cta')">
+    <input type="email" id="cta-email" placeholder="Your email address" required>
+    <button type="submit">Join Waitlist</button>
+  </form>
+  <p class="cta-note">No spam. No credit card. Just early access.</p>
+  <p class="cta-success" id="cta-success">You're on the list. We'll be in touch.</p>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="footer-logo">Eight Five Collective</div>
+  <div class="footer-copy">&copy; 2026 Eight Five Collective. All rights reserved.</div>
+  <a class="footer-link" href="mailto:hello@eightfivecollective.com">hello@eightfivecollective.com</a>
+</footer>
+
+<script>
+// Scroll animations
+var observer = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+    }
+  });
+},{threshold:0.15});
+document.querySelectorAll('.fade-up').forEach(function(el){
+  observer.observe(el);
+});
+
+// Form submission
+function handleSubmit(e, id){
+  e.preventDefault();
+  var email = document.getElementById(id+'-email').value;
+  var form = e.target;
+  var success = document.getElementById(id+'-success');
+
+  // Store email locally
+  var emails = JSON.parse(localStorage.getItem('85c-waitlist') || '[]');
+  if(emails.indexOf(email) === -1){
+    emails.push(email);
+    localStorage.setItem('85c-waitlist', JSON.stringify(emails));
+  }
+
+  form.style.display = 'none';
+  success.style.display = 'block';
+
+  // Clear after 5 seconds to allow re-entry
+  setTimeout(function(){
+    form.style.display = 'flex';
+    form.reset();
+    success.style.display = 'none';
+  }, 5000);
+}
+</script>
+
+</body>
+</html>
