@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Toolkit — Eight Five Collective</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#f8f5f0;
+  --cream-dark:#ede8e0;
+  --ink:#1a1814;
+  --ink-mid:#4a4540;
+  --ink-light:#8a857d;
+  --gold:#9a7d4a;
+  --gold-light:#c4a97a;
+  --border:rgba(26,24,20,0.1);
+}
+html{scroll-behavior:smooth;color-scheme:light}
+body{background:#f8f5f0 !important;color:#1a1814;font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden}
+
+/* NAV */
+nav{
+padding:28px 48px;
+display:flex;align-items:center;justify-content:space-between;
+border-bottom:1px solid var(–border);
+}
+.nav-logo{
+font-family:‘Jost’,sans-serif;font-weight:200;font-size:12px;
+letter-spacing:0.3em;text-transform:uppercase;color:var(–ink);text-decoration:none;
+}
+.nav-back{
+font-size:11px;letter-spacing:0.2em;text-transform:uppercase;
+color:var(–ink-light);text-decoration:none;
+display:flex;align-items:center;gap:8px;transition:color 0.3s;
+}
+.nav-back:hover{color:var(–gold)}
+
+/* HERO */
+.hero{
+padding:80px 48px 60px;
+max-width:1100px;margin:0 auto;
+display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;
+}
+@media(max-width:768px){
+.hero{grid-template-columns:1fr;gap:48px;padding:48px 24px}
+nav{padding:20px 24px}
+}
+
+/* LEFT SIDE */
+.left{}
+.eyebrow{
+font-size:10px;letter-spacing:0.4em;text-transform:uppercase;
+color:var(–gold);margin-bottom:20px;
+opacity:0;animation:fadeUp 0.8s ease forwards 0.2s;
+}
+.title{
+font-family:‘Cormorant Garamond’,serif;font-weight:300;
+font-size:clamp(36px,5vw,60px);line-height:1.1;
+color:var(–ink);margin-bottom:24px;
+opacity:0;animation:fadeUp 0.8s ease forwards 0.3s;
+}
+.title em{font-style:italic;color:var(–gold)}
+.desc{
+font-size:13px;line-height:1.9;color:var(–ink-mid);
+margin-bottom:40px;max-width:440px;
+opacity:0;animation:fadeUp 0.8s ease forwards 0.4s;
+}
+
+/* WHAT’S INCLUDED */
+.includes{
+margin-bottom:40px;
+opacity:0;animation:fadeUp 0.8s ease forwards 0.5s;
+}
+.includes-label{
+font-size:9px;letter-spacing:0.4em;text-transform:uppercase;
+color:var(–ink-light);margin-bottom:20px;
+}
+.include-item{
+display:flex;align-items:flex-start;gap:14px;
+padding:16px 0;border-top:1px solid var(–border);
+}
+.include-item:last-child{border-bottom:1px solid var(–border)}
+.include-check{
+width:18px;height:18px;border-radius:50%;
+background:var(–gold);flex-shrink:0;margin-top:1px;
+display:flex;align-items:center;justify-content:center;
+}
+.include-check svg{width:9px;height:9px}
+.include-text{}
+.include-title{
+font-size:13px;font-weight:400;color:var(–ink);
+margin-bottom:3px;letter-spacing:0.02em;
+}
+.include-sub{
+font-size:11px;color:var(–ink-light);line-height:1.6;letter-spacing:0.02em;
+}
+
+/* TESTIMONIAL */
+.testimonial{
+background:var(–cream-dark);padding:28px 32px;
+border-left:2px solid var(–gold);margin-top:8px;
+opacity:0;animation:fadeUp 0.8s ease forwards 0.6s;
+}
+.testimonial-text{
+font-family:‘Cormorant Garamond’,serif;font-style:italic;
+font-size:17px;line-height:1.6;color:var(–ink-mid);margin-bottom:12px;
+}
+.testimonial-author{
+font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(–ink-light);
+}
+
+/* RIGHT SIDE — PURCHASE CARD */
+.right{
+position:sticky;top:40px;
+}
+.card{
+background:#fff;border:1px solid var(–border);
+border-radius:4px;padding:40px;
+box-shadow:0 4px 40px rgba(26,24,20,0.06);
+opacity:0;animation:fadeUp 0.8s ease forwards 0.4s;
+}
+.card-eyebrow{
+font-size:9px;letter-spacing:0.4em;text-transform:uppercase;
+color:var(–gold);margin-bottom:16px;
+}
+.card-title{
+font-family:‘Cormorant Garamond’,serif;font-weight:300;
+font-size:28px;color:var(–ink);margin-bottom:8px;line-height:1.2;
+}
+.card-sub{
+font-size:12px;color:var(–ink-light);letter-spacing:0.05em;
+margin-bottom:28px;line-height:1.6;
+}
+.price-wrap{
+display:flex;align-items:baseline;gap:8px;margin-bottom:8px;
+}
+.price{
+font-family:‘Cormorant Garamond’,serif;font-weight:300;
+font-size:56px;color:var(–ink);line-height:1;
+}
+.price-note{
+font-size:11px;color:var(–ink-light);letter-spacing:0.1em;text-transform:uppercase;
+}
+.price-sub{
+font-size:11px;color:var(–ink-light);margin-bottom:32px;letter-spacing:0.05em;
+}
+.divider{height:1px;background:var(–border);margin:24px 0}
+
+/* FORM */
+.form-group{margin-bottom:16px}
+.form-label{
+font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+color:var(–ink-light);margin-bottom:8px;display:block;
+}
+.form-input{
+width:100%;padding:13px 16px;
+border:1px solid rgba(26,24,20,0.2);background:var(–cream);
+font-family:‘Jost’,sans-serif;font-size:13px;color:var(–ink);
+outline:none;transition:border-color 0.3s;letter-spacing:0.02em;
+border-radius:2px;
+}
+.form-input:focus{border-color:var(–ink)}
+.form-input::placeholder{color:var(–ink-light)}
+
+/* STRIPE ELEMENT */
+.card-element-wrap{
+padding:13px 16px;
+border:1px solid rgba(26,24,20,0.2);background:var(–cream);
+border-radius:2px;transition:border-color 0.3s;
+}
+.card-element-wrap.focused{border-color:var(–ink)}
+
+/* BUY BUTTON */
+.buy-btn{
+width:100%;padding:18px;margin-top:24px;
+background:var(–ink);color:var(–cream);
+border:none;font-family:‘Jost’,sans-serif;
+font-size:11px;letter-spacing:0.3em;text-transform:uppercase;
+cursor:pointer;transition:background 0.3s;border-radius:2px;
+display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.buy-btn:hover{background:var(–gold)}
+.buy-btn:disabled{background:var(–ink-light);cursor:not-allowed}
+.buy-btn .spinner{
+width:14px;height:14px;border:1.5px solid rgba(255,255,255,0.3);
+border-top-color:#fff;border-radius:50%;
+animation:spin 0.8s linear infinite;display:none;
+}
+.buy-btn.loading .spinner{display:block}
+.buy-btn.loading .btn-text{opacity:0.6}
+
+.secure-note{
+display:flex;align-items:center;justify-content:center;gap:6px;
+margin-top:14px;font-size:10px;color:var(–ink-light);letter-spacing:0.1em;
+}
+.secure-note svg{width:12px;height:12px;opacity:0.5}
+
+/* ERROR */
+.error-msg{
+color:#c0392b;font-size:11px;margin-top:8px;
+letter-spacing:0.05em;display:none;
+}
+
+/* SUCCESS STATE */
+.success-state{
+display:none;text-align:center;padding:20px 0;
+}
+.success-icon{
+width:48px;height:48px;background:var(–gold);border-radius:50%;
+display:flex;align-items:center;justify-content:center;margin:0 auto 16px;
+}
+.success-title{
+font-family:‘Cormorant Garamond’,serif;font-size:24px;
+color:var(–ink);margin-bottom:8px;
+}
+.success-sub{font-size:12px;color:var(–ink-light);line-height:1.8;letter-spacing:0.05em}
+
+/* GUARANTEE */
+.guarantee{
+margin-top:20px;padding:16px;background:var(–cream-dark);
+display:flex;gap:12px;align-items:flex-start;
+}
+.guarantee-icon{font-size:18px;flex-shrink:0}
+.guarantee-text{font-size:11px;color:var(–ink-mid);line-height:1.7;letter-spacing:0.02em}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="https://eightfivecollective.com">Eight Five Collective</a>
+  <a class="nav-back" href="https://eightfivecollective.com">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Back
+  </a>
+</nav>
+
+<div class="hero">
+
+  <!-- LEFT -->
+
+  <div class="left">
+    <div class="eyebrow">Wedding Photographer Toolkit</div>
+    <h1 class="title">Everything you need<br><em>in the field.</em></h1>
+    <p class="desc">A complete toolkit built from years behind the lens. Shot lists, posing prompts, technical notes, and client checklists — all customizable to your voice and your brand.</p>
+
+```
+<div class="includes">
+  <div class="includes-label">What's included</div>
+
+  <div class="include-item">
+    <div class="include-check">
+      <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="include-text">
+      <div class="include-title">Wedding Day Shot List</div>
+      <div class="include-sub">133 shots across 5 tabs — Getting Ready, Ceremony, Family, Couples & Reception. Each with posing directions, camera settings, and a pun to break the tension.</div>
+    </div>
+  </div>
+
+  <div class="include-item">
+    <div class="include-check">
+      <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="include-text">
+      <div class="include-title">Bridal Flatlay Checklist</div>
+      <div class="include-sub">A polished, interactive checklist to send clients before their session. Never miss a ring, veil, or invitation suite again.</div>
+    </div>
+  </div>
+
+  <div class="include-item">
+    <div class="include-check">
+      <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="include-text">
+      <div class="include-title">10 Three-Quarter Poses</div>
+      <div class="include-sub">Detailed posing directions with technical notes for every couples pose — from the classic 3/4 angle to the almost-kiss.</div>
+    </div>
+  </div>
+
+  <div class="include-item">
+    <div class="include-check">
+      <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="include-text">
+      <div class="include-title">10 Full Body Poses</div>
+      <div class="include-sub">From the dip to golden hour wide shots — every pose with exact direction, focal length, and aperture guidance.</div>
+    </div>
+  </div>
+
+  <div class="include-item">
+    <div class="include-check">
+      <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="include-text">
+      <div class="include-title">10 Intimate Poses</div>
+      <div class="include-sub">Close-up, tender moments — forehead kisses, veil shots, hands intertwined. Built for the images that make people cry.</div>
+    </div>
+  </div>
+
+  <div class="include-item">
+    <div class="include-check">
+      <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="include-text">
+      <div class="include-title">Works on Any Device</div>
+      <div class="include-sub">Pull it up on your phone between shots. No app needed, no login required. Just open and go.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="testimonial">
+  <div class="testimonial-text">"I used to rewrite my shot list before every wedding. Now I just open this and I'm ready. It's the tool I didn't know I needed."</div>
+  <div class="testimonial-author">Wedding photographer, Florida</div>
+</div>
+```
+
+  </div>
+
+  <!-- RIGHT — PURCHASE CARD -->
+
+  <div class="right">
+    <div class="card">
+
+```
+  <div id="purchase-form">
+    <div class="card-eyebrow">One-Time Purchase</div>
+    <div class="card-title">Wedding Toolkit</div>
+    <div class="card-sub">Instant access. Use it forever.</div>
+
+    <div class="price-wrap">
+      <div class="price">$37</div>
+      <div class="price-note">one time</div>
+    </div>
+    <div class="price-sub">No subscription. No renewal. Yours forever.</div>
+
+    <div class="divider"></div>
+
+    <div class="form-group">
+      <label class="form-label" for="email">Email Address</label>
+      <input class="form-input" type="email" id="email" placeholder="you@yourstudio.com" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="name">Name on Card</label>
+      <input class="form-input" type="text" id="name" placeholder="Your full name" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Card Details</label>
+      <div class="card-element-wrap" id="card-element-wrap">
+        <div id="card-element"></div>
+      </div>
+      <div class="error-msg" id="card-errors"></div>
+    </div>
+
+    <button class="buy-btn" id="buy-btn" type="button" onclick="handlePurchase()">
+      <div class="spinner"></div>
+      <span class="btn-text">Get Instant Access — $37</span>
+    </button>
+
+    <div class="secure-note">
+      <svg viewBox="0 0 12 12" fill="none">
+        <rect x="1" y="5" width="10" height="7" rx="1" stroke="currentColor" stroke-width="1"/>
+        <path d="M4 5V3.5a2 2 0 0 1 4 0V5" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      Secured by Stripe. Your card is never stored.
+    </div>
+  </div>
+
+  <div class="success-state" id="success-state">
+    <div class="success-icon">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <path d="M4 11l5 5 9-9" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="success-title">You're in.</div>
+    <div class="success-sub">Check your inbox — your access link<br>is on its way to you now.</div>
+  </div>
+
+  <div class="guarantee">
+    <div class="guarantee-icon">🤍</div>
+    <div class="guarantee-text">Built by a working wedding photographer. If it doesn't make your next shoot better, email hello@eightfivecollective.com and we'll make it right.</div>
+  </div>
+
+</div>
+```
+
+  </div>
+
+</div>
+
+<script>
+var stripe, elements, cardElement;
+
+function initStripe(){
+  try {
+    stripe = Stripe('pk_live_51TR0S3BUJwhDaJdbGHpV3dS70zd8jez4yFFB4Ndx9xxzctA14VJItMUoNpBMy38WqjszgJqqtCAK54pEDolZPhA100EmmidK1B');
+    elements = stripe.elements({
+      fonts: [{cssSrc: 'https://fonts.googleapis.com/css2?family=Jost:wght@300&display=swap'}]
+    });
+    cardElement = elements.create('card', {
+      style: {
+        base: {
+          fontFamily: "'Jost', sans-serif",
+          fontSize: '13px',
+          color: '#1a1814',
+          fontWeight: '300',
+          letterSpacing: '0.02em',
+          '::placeholder': {color: '#8a857d'}
+        },
+        invalid: {color: '#c0392b'}
+      }
+    });
+    cardElement.mount('#card-element');
+    cardElement.on('focus', function(){ document.getElementById('card-element-wrap').classList.add('focused'); });
+    cardElement.on('blur', function(){ document.getElementById('card-element-wrap').classList.remove('focused'); });
+    cardElement.on('change', function(e){
+      var el = document.getElementById('card-errors');
+      if(e.error){ el.textContent = e.error.message; el.style.display = 'block'; }
+      else { el.style.display = 'none'; }
+    });
+  } catch(e){ console.log('Stripe preview mode'); }
+}
+
+window.addEventListener('load', initStripe);
+
+async function handlePurchase(){
+  var email = document.getElementById('email').value;
+  var name = document.getElementById('name').value;
+  var btn = document.getElementById('buy-btn');
+  var errorEl = document.getElementById('card-errors');
+
+  if(!email || !name){
+    errorEl.textContent = 'Please fill in all fields.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  btn.classList.add('loading');
+  btn.disabled = true;
+  errorEl.style.display = 'none';
+
+  try {
+    // Create payment method
+    var result = await stripe.createPaymentMethod({
+      type: 'card',
+      card: cardElement,
+      billing_details: {name: name, email: email}
+    });
+
+    if(result.error){
+      errorEl.textContent = result.error.message;
+      errorEl.style.display = 'block';
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      return;
+    }
+
+    // Send to your backend (we'll build this next)
+    var response = await fetch('/api/purchase', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        paymentMethodId: result.paymentMethod.id,
+        email: email,
+        name: name,
+        amount: 3700
+      })
+    });
+
+    var data = await response.json();
+
+    if(data.success){
+      document.getElementById('purchase-form').style.display = 'none';
+      document.getElementById('success-state').style.display = 'block';
+    } else {
+      errorEl.textContent = data.error || 'Payment failed. Please try again.';
+      errorEl.style.display = 'block';
+      btn.classList.remove('loading');
+      btn.disabled = false;
+    }
+
+  } catch(err) {
+    errorEl.textContent = 'Something went wrong. Please try again.';
+    errorEl.style.display = 'block';
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+}
+</script>
+
+</body>
+</html>
