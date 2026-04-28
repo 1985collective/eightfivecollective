@@ -28,7 +28,7 @@ description: ‘Eight Five Collective — Wedding Toolkit’,
 ‘metadata[customer_email]’: email
 }, process.env.STRIPE_SECRET_KEY);
 
-```
+
 if (paymentIntent.error) {
   return res.status(400).json({ error: paymentIntent.error.message });
 }
