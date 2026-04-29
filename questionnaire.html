@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Industry Questionnaire — Eight Five Collective</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{color-scheme:light}
+:root{
+  --cream:#f8f5f0;
+  --cream-dark:#ede8e0;
+  --ink:#1a1814;
+  --ink-mid:#4a4540;
+  --ink-light:#8a857d;
+  --gold:#9a7d4a;
+  --gold-light:#c4a97a;
+  --border:rgba(26,24,20,0.12);
+}
+body{background:#f8f5f0;color:#1a1814;font-family:'Jost',sans-serif;font-weight:300;min-height:100vh}
+
+/* HEADER */
+header{
+background:linear-gradient(160deg,#1a1510 0%,#2a1f0a 60%,#3d2e10 100%);
+padding:60px 48px 52px;
+text-align:center;
+position:relative;
+overflow:hidden;
+}
+header::before{
+content:’’;position:absolute;
+top:-60px;right:-60px;
+width:240px;height:240px;border-radius:50%;
+border:1px solid rgba(196,169,122,0.08);
+}
+header::after{
+content:’’;position:absolute;
+bottom:-40px;left:-40px;
+width:180px;height:180px;border-radius:50%;
+border:1px solid rgba(196,169,122,0.06);
+}
+.header-eyebrow{
+font-size:9px;letter-spacing:0.4em;text-transform:uppercase;
+color:var(–gold-light);margin-bottom:16px;opacity:0.8;
+}
+.header-title{
+font-family:‘Cormorant Garamond’,serif;font-weight:300;
+font-size:clamp(32px,5vw,52px);color:#f8f5f0;
+line-height:1.15;margin-bottom:16px;
+}
+.header-title em{font-style:italic;color:var(–gold-light)}
+.header-sub{
+font-size:12px;line-height:1.9;
+color:rgba(248,245,240,0.55);
+max-width:480px;margin:0 auto;
+letter-spacing:0.03em;
+}
+
+/* PROGRESS */
+.progress-wrap{
+max-width:640px;margin:0 auto;
+padding:32px 48px 0;
+}
+.progress-bar-bg{
+height:2px;background:rgba(26,24,20,0.08);border-radius:1px;
+}
+.progress-bar-fill{
+height:100%;background:var(–gold);border-radius:1px;
+transition:width 0.5s ease;width:0%;
+}
+.progress-label{
+font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+color:var(–ink-light);margin-top:8px;text-align:right;
+}
+
+/* FORM */
+.form-wrap{
+max-width:640px;margin:0 auto;
+padding:48px 48px 80px;
+}
+
+/* SECTION */
+.section{
+margin-bottom:48px;
+opacity:0;
+animation:fadeUp 0.7s ease forwards;
+}
+.section:nth-child(1){animation-delay:0.1s}
+.section:nth-child(2){animation-delay:0.2s}
+.section:nth-child(3){animation-delay:0.3s}
+.section:nth-child(4){animation-delay:0.4s}
+.section:nth-child(5){animation-delay:0.5s}
+.section:nth-child(6){animation-delay:0.6s}
+.section:nth-child(7){animation-delay:0.7s}
+
+.section-label{
+font-size:9px;letter-spacing:0.4em;text-transform:uppercase;
+color:var(–gold);margin-bottom:24px;
+display:flex;align-items:center;gap:12px;
+}
+.section-label::after{
+content:’’;flex:1;height:1px;background:rgba(154,125,74,0.2);
+}
+
+/* QUESTION */
+.question{margin-bottom:32px}
+.question-text{
+font-family:‘Cormorant Garamond’,serif;font-weight:400;
+font-size:20px;color:var(–ink);line-height:1.4;
+margin-bottom:6px;
+}
+.question-sub{
+font-size:11px;color:var(–ink-light);letter-spacing:0.05em;
+margin-bottom:16px;line-height:1.6;
+}
+
+/* INPUTS */
+.input-text{
+width:100%;padding:14px 0;
+border:none;border-bottom:1px solid var(–border);
+background:transparent;
+font-family:‘Jost’,sans-serif;font-size:14px;
+color:var(–ink);font-weight:300;
+outline:none;transition:border-color 0.3s;
+letter-spacing:0.02em;
+}
+.input-text:focus{border-bottom-color:var(–ink)}
+.input-text::placeholder{color:var(–ink-light)}
+
+.input-textarea{
+width:100%;padding:14px 0;
+border:none;border-bottom:1px solid var(–border);
+background:transparent;
+font-family:‘Jost’,sans-serif;font-size:14px;
+color:var(–ink);font-weight:300;
+outline:none;transition:border-color 0.3s;
+resize:none;min-height:80px;
+letter-spacing:0.02em;
+line-height:1.8;
+}
+.input-textarea:focus{border-bottom-color:var(–ink)}
+.input-textarea::placeholder{color:var(–ink-light)}
+
+/* RADIO / CHECKBOX */
+.options{display:flex;flex-direction:column;gap:10px}
+.option{
+display:flex;align-items:center;gap:14px;
+padding:13px 16px;
+border:1px solid var(–border);
+cursor:pointer;
+transition:all 0.2s;
+border-radius:2px;
+user-select:none;
+}
+.option:hover{border-color:var(–gold);background:rgba(154,125,74,0.03)}
+.option.selected{
+border-color:var(–gold);
+background:rgba(154,125,74,0.06);
+}
+.option-indicator{
+width:18px;height:18px;border-radius:50%;
+border:1.5px solid var(–border);flex-shrink:0;
+display:flex;align-items:center;justify-content:center;
+transition:all 0.2s;
+}
+.option.selected .option-indicator{
+background:var(–gold);border-color:var(–gold);
+}
+.option.selected .option-indicator::after{
+content:’’;width:6px;height:6px;border-radius:50%;background:#fff;
+}
+.option-check .option-indicator{border-radius:3px}
+.option-check.selected .option-indicator::after{
+content:’’;width:10px;height:10px;border-radius:1px;
+background:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 10 10’ fill=‘none’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cpath d=‘M1.5 5l2.5 2.5 4.5-4.5’ stroke=‘white’ stroke-width=‘1.5’ stroke-linecap=‘round’ stroke-linejoin=‘round’/%3E%3C/svg%3E”) center/contain no-repeat;
+}
+.option-text{font-size:13px;color:var(–ink);letter-spacing:0.02em}
+
+/* SCALE */
+.scale-wrap{display:flex;gap:8px;align-items:center}
+.scale-btn{
+width:40px;height:40px;border-radius:2px;
+border:1px solid var(–border);
+background:transparent;
+font-family:‘Jost’,sans-serif;font-size:13px;
+color:var(–ink-light);cursor:pointer;
+transition:all 0.2s;
+display:flex;align-items:center;justify-content:center;
+}
+.scale-btn:hover{border-color:var(–gold);color:var(–gold)}
+.scale-btn.selected{background:var(–gold);border-color:var(–gold);color:#fff}
+.scale-labels{
+display:flex;justify-content:space-between;
+margin-top:8px;
+}
+.scale-label{font-size:10px;color:var(–ink-light);letter-spacing:0.1em}
+
+/* DIVIDER */
+.form-divider{
+height:1px;background:var(–border);
+margin:48px 0;
+}
+
+/* SUBMIT */
+.submit-wrap{text-align:center;padding-top:16px}
+.submit-btn{
+padding:18px 56px;
+background:var(–ink);color:#f8f5f0;
+border:none;
+font-family:‘Jost’,sans-serif;
+font-size:11px;letter-spacing:0.3em;text-transform:uppercase;
+cursor:pointer;border-radius:2px;
+transition:background 0.3s;
+}
+.submit-btn:hover{background:var(–gold)}
+.submit-note{
+font-size:10px;color:var(–ink-light);
+letter-spacing:0.1em;margin-top:16px;
+}
+
+/* SUCCESS */
+.success-state{
+display:none;text-align:center;
+padding:80px 48px;
+max-width:560px;margin:0 auto;
+}
+.success-icon{
+width:56px;height:56px;background:var(–gold);
+border-radius:50%;display:flex;align-items:center;
+justify-content:center;margin:0 auto 24px;
+}
+.success-title{
+font-family:‘Cormorant Garamond’,serif;font-weight:300;
+font-size:36px;color:var(–ink);margin-bottom:12px;
+}
+.success-title em{font-style:italic;color:var(–gold)}
+.success-sub{
+font-size:13px;color:var(–ink-mid);line-height:1.9;
+max-width:400px;margin:0 auto;
+}
+
+/* FOOTER */
+footer{
+padding:32px 48px;
+border-top:1px solid var(–border);
+display:flex;align-items:center;justify-content:space-between;
+flex-wrap:wrap;gap:12px;
+}
+.footer-logo{font-size:11px;letter-spacing:0.3em;text-transform:uppercase;font-weight:200;color:var(–ink)}
+.footer-copy{font-size:10px;color:var(–ink-light);letter-spacing:0.1em}
+
+@media(max-width:600px){
+header{padding:48px 24px 40px}
+.form-wrap{padding:40px 24px 60px}
+.progress-wrap{padding:24px 24px 0}
+footer{padding:24px}
+.scale-wrap{flex-wrap:wrap}
+}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(16px)}
+to{opacity:1;transform:translateY(0)}
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">Eight Five Collective — Industry Research</div>
+  <h1 class="header-title">Help us build<br><em>something for you.</em></h1>
+  <p class="header-sub">We're developing tools specifically for wedding planners and day of coordinators. Your experience shapes everything we build. This takes about 5 minutes.</p>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progress-fill"></div>
+  </div>
+  <div class="progress-label" id="progress-label">0 of 15 answered</div>
+</div>
+
+<div class="form-wrap" id="form-wrap">
+
+  <!-- SECTION 1 — ABOUT YOU -->
+
+  <div class="section">
+    <div class="section-label">About You</div>
+
+```
+<div class="question">
+  <div class="question-text">What is your name?</div>
+  <input class="input-text" type="text" placeholder="Your full name" data-q="name">
+</div>
+
+<div class="question">
+  <div class="question-text">What is your email address?</div>
+  <div class="question-sub">We'll share early access and results with you.</div>
+  <input class="input-text" type="email" placeholder="you@yourbusiness.com" data-q="email">
+</div>
+
+<div class="question">
+  <div class="question-text">What best describes your role?</div>
+  <div class="options" data-q="role" data-type="radio">
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Day of Coordinator</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Wedding Planner</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Both Planner and Coordinator</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Other</div>
+    </div>
+  </div>
+</div>
+
+<div class="question">
+  <div class="question-text">How many weddings do you coordinate per year?</div>
+  <div class="options" data-q="weddings_per_year" data-type="radio">
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">1 to 10</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">10 to 25</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">25 to 50</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">50 or more</div>
+    </div>
+  </div>
+</div>
+
+<div class="question">
+  <div class="question-text">How many years have you been in the industry?</div>
+  <div class="options" data-q="years" data-type="radio">
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Less than 2 years</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">2 to 5 years</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">5 to 10 years</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">10 or more years</div>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <div class="form-divider"></div>
+
+  <!-- SECTION 2 — WORKFLOW -->
+
+  <div class="section">
+    <div class="section-label">Your Workflow</div>
+
+```
+<div class="question">
+  <div class="question-text">What tools do you currently use to manage your wedding day workflow?</div>
+  <div class="question-sub">Select all that apply.</div>
+  <div class="options" data-q="tools" data-type="checkbox">
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Google Docs or Sheets</div>
+    </div>
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Aisle Planner</div>
+    </div>
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Honeybook</div>
+    </div>
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Dubsado</div>
+    </div>
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Notes app on my phone</div>
+    </div>
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Printed documents</div>
+    </div>
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Custom templates I built myself</div>
+    </div>
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Nothing structured — I keep it in my head</div>
+    </div>
+  </div>
+</div>
+
+<div class="question">
+  <div class="question-text">What is the most time consuming part of your wedding day preparation?</div>
+  <textarea class="input-textarea" placeholder="Tell us what takes the most time or energy before the big day..." data-q="time_consuming"></textarea>
+</div>
+
+<div class="question">
+  <div class="question-text">What is the one thing that goes wrong most often on wedding days?</div>
+  <textarea class="input-textarea" placeholder="Be as specific as you like — this is exactly what we want to solve..." data-q="goes_wrong"></textarea>
+</div>
+```
+
+  </div>
+
+  <div class="form-divider"></div>
+
+  <!-- SECTION 3 — PAIN POINTS -->
+
+  <div class="section">
+    <div class="section-label">Pain Points</div>
+
+```
+<div class="question">
+  <div class="question-text">How confident do you feel going into a wedding day?</div>
+  <div class="question-sub">1 = never confident, 10 = always completely confident</div>
+  <div class="scale-wrap" data-q="confidence" data-type="scale">
+    <div class="scale-btn" onclick="selectScale(this, 'confidence')">1</div>
+    <div class="scale-btn" onclick="selectScale(this, 'confidence')">2</div>
+    <div class="scale-btn" onclick="selectScale(this, 'confidence')">3</div>
+    <div class="scale-btn" onclick="selectScale(this, 'confidence')">4</div>
+    <div class="scale-btn" onclick="selectScale(this, 'confidence')">5</div>
+    <div class="scale-btn" onclick="selectScale(this, 'confidence')">6</div>
+    <div class="scale-btn" onclick="selectScale(this, 'confidence')">7</div>
+    <div class="scale-btn" onclick="selectScale(this, 'confidence')">8</div>
+    <div class="scale-btn" onclick="selectScale(this, 'confidence')">9</div>
+    <div class="scale-btn" onclick="selectScale(this, 'confidence')">10</div>
+  </div>
+  <div class="scale-labels">
+    <span class="scale-label">Never confident</span>
+    <span class="scale-label">Always confident</span>
+  </div>
+</div>
+
+<div class="question">
+  <div class="question-text">Which of these challenges do you face regularly?</div>
+  <div class="question-sub">Select all that apply.</div>
+  <div class="options" data-q="challenges" data-type="checkbox">
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Keeping vendors on timeline</div>
+    </div>
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Managing last minute changes</div>
+    </div>
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Communication between vendors on the day</div>
+    </div>
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Keeping the bridal party organized</div>
+    </div>
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Managing family dynamics</div>
+    </div>
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Staying on top of the photography timeline</div>
+    </div>
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Dealing with unexpected venue issues</div>
+    </div>
+    <div class="option option-check" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Client expectations vs reality</div>
+    </div>
+  </div>
+</div>
+
+<div class="question">
+  <div class="question-text">If you could have one tool that made your job easier, what would it do?</div>
+  <textarea class="input-textarea" placeholder="Dream big — this is your chance to shape what we build..." data-q="dream_tool"></textarea>
+</div>
+```
+
+  </div>
+
+  <div class="form-divider"></div>
+
+  <!-- SECTION 4 — COLLABORATION -->
+
+  <div class="section">
+    <div class="section-label">Working with Photographers</div>
+
+```
+<div class="question">
+  <div class="question-text">How well do photographers you work with typically prepare for the wedding day?</div>
+  <div class="options" data-q="photographer_prep" data-type="radio">
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Very well — they always come prepared</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Usually prepared but sometimes miss things</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">It varies a lot from photographer to photographer</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Often underprepared — it causes issues</div>
+    </div>
+  </div>
+</div>
+
+<div class="question">
+  <div class="question-text">What would make your collaboration with photographers smoother?</div>
+  <textarea class="input-textarea" placeholder="What do you wish photographers showed up with or knew before the day..." data-q="photographer_collab"></textarea>
+</div>
+```
+
+  </div>
+
+  <div class="form-divider"></div>
+
+  <!-- SECTION 5 — PRODUCT FIT -->
+
+  <div class="section">
+    <div class="section-label">What We're Building</div>
+
+```
+<div class="question">
+  <div class="question-text">How interested would you be in a toolkit built specifically for planners and coordinators — timelines, vendor cue sheets, day of checklists, and emergency guides?</div>
+  <div class="options" data-q="interest" data-type="radio">
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Very interested — I need this now</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Interested — it depends on what's included</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Somewhat interested</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Not really — I have what I need</div>
+    </div>
+  </div>
+</div>
+
+<div class="question">
+  <div class="question-text">What would you be willing to pay for a complete, customizable day of toolkit?</div>
+  <div class="options" data-q="price" data-type="radio">
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Under $25 — one time</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">$25 to $50 — one time</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">$50 to $100 — one time</div>
+    </div>
+    <div class="option" onclick="selectOption(this)">
+      <div class="option-indicator"></div>
+      <div class="option-text">Monthly subscription if it's updated regularly</div>
+    </div>
+  </div>
+</div>
+
+<div class="question">
+  <div class="question-text">Anything else you want us to know?</div>
+  <div class="question-sub">Final thoughts, frustrations, ideas — we read every single response.</div>
+  <textarea class="input-textarea" placeholder="This is your space..." data-q="final_thoughts"></textarea>
+</div>
+```
+
+  </div>
+
+  <div class="submit-wrap">
+    <button class="submit-btn" onclick="submitForm()">Submit My Responses</button>
+    <div class="submit-note">Your responses are confidential and used only to improve our products.</div>
+  </div>
+
+</div>
+
+<!-- SUCCESS STATE -->
+
+<div class="success-state" id="success-state">
+  <div class="success-icon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M4 12l5 5 11-11" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <h2 class="success-title">Thank you,<br><em>genuinely.</em></h2>
+  <p class="success-sub">Your responses will directly shape what we build. We'll be in touch with early access when the planner and coordinator toolkit is ready.</p>
+</div>
+
+<footer>
+  <div class="footer-logo">Eight Five Collective</div>
+  <div class="footer-copy">&copy; 2026 Eight Five Collective</div>
+</footer>
+
+<script>
+var answers = {};
+var totalQuestions = 15;
+
+function selectOption(el) {
+  var group = el.closest('.options');
+  var type = group.getAttribute('data-type');
+  var q = group.getAttribute('data-q');
+
+  if (type === 'radio') {
+    group.querySelectorAll('.option').forEach(function(o) { o.classList.remove('selected'); });
+    el.classList.add('selected');
+    answers[q] = el.querySelector('.option-text').textContent;
+  } else {
+    el.classList.toggle('selected');
+    var selected = [];
+    group.querySelectorAll('.option.selected').forEach(function(o) {
+      selected.push(o.querySelector('.option-text').textContent);
+    });
+    answers[q] = selected;
+  }
+  updateProgress();
+}
+
+function selectScale(el, q) {
+  var wrap = el.closest('.scale-wrap');
+  wrap.querySelectorAll('.scale-btn').forEach(function(b) { b.classList.remove('selected'); });
+  el.classList.add('selected');
+  answers[q] = el.textContent;
+  updateProgress();
+}
+
+document.querySelectorAll('.input-text, .input-textarea').forEach(function(el) {
+  el.addEventListener('input', function() {
+    var q = el.getAttribute('data-q');
+    answers[q] = el.value;
+    updateProgress();
+  });
+});
+
+function updateProgress() {
+  var count = Object.keys(answers).filter(function(k) {
+    var v = answers[k];
+    if (Array.isArray(v)) return v.length > 0;
+    return v && v.trim() !== '';
+  }).length;
+  var pct = Math.min(Math.round((count / totalQuestions) * 100), 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = count + ' of ' + totalQuestions + ' answered';
+}
+
+function submitForm() {
+  var name = document.querySelector('[data-q="name"]').value;
+  var email = document.querySelector('[data-q="email"]').value;
+
+  if (!name || !email) {
+    alert('Please fill in your name and email before submitting.');
+    return;
+  }
+
+  // Send to Formspree
+  fetch('https://formspree.io/f/xnjlkprk', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    body: JSON.stringify({
+      subject: 'Eight Five Collective — Planner/Coordinator Questionnaire',
+      name: name,
+      email: email,
+      responses: answers
+    })
+  })
+  .then(function() {
+    document.getElementById('form-wrap').style.display = 'none';
+    document.getElementById('success-state').style.display = 'block';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  })
+  .catch(function() {
+    document.getElementById('form-wrap').style.display = 'none';
+    document.getElementById('success-state').style.display = 'block';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+}
+</script>
+
+</body>
+</html>
